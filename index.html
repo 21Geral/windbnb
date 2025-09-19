@@ -1,101 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="all">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./src/styles/output.css" />
+    <link rel="stylesheet" href="./src/styles/style.css" />
     <script src="./src/scripts/main.js" defer type="module"></script>
     <title>Windbnb</title>
   </head>
 
-  <body class="bg-white">
-    <div id="overlay" class="fixed inset-0 bg-black/40 z-40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out">
+  <body class="bg-white dark:bg-slate-900">
+    <div
+      id="overlay"
+      class="fixed inset-0 bg-white/50 dark:bg-black/60 z-40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"
+    >
       <div
         id="searchModal"
-        class="fixed inset-x-0 top-0 w-full h-3/4 sm:left-1/2 sm:h-auto sm:w-full sm:-translate-x-1/2 bg-white z-50 shadow-lg transform transition-all duration-300 ease-in-out opacity-0 -translate-y-6 pointer-events-none"
+        class="fixed inset-x-0 top-0 w-full h-3/4 sm:left-1/2 sm:h-auto sm:w-full sm:-translate-x-1/2 bg-white dark:bg-gray-600 z-50 shadow-lg transform transition-all duration-300 ease-in-out opacity-0 -translate-y-6 pointer-events-none"
       >
         <div class="flex justify-between items-center p-4 sm:hidden">
-          <h2 class="text-sm">Edit your search</h2>
-          <button id="closeModal">
-            <svg
-              class="w-5 font-bold"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <h2 class="text-sm text-gray-800 dark:text-gray-200">Edit your search</h2>
+          <button id="closeModal" class="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">✖</button>
         </div>
 
         <div
-          class="rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col mx-6 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-gray-200"
+          class="rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col mx-6 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-gray-200 dark:sm:divide-gray-700 sm:mt-6"
         >
-          <div class="p-4 hover:bg-gray-50 cursor-pointer">
-            <p class="text-xs font-semibold text-gray-500 uppercase">Location</p>
-            <p class="text-gray-700">Helsinki, Finland</p>
+          <!-- Location -->
+          <div id="tabLocation" class="p-4 hover:bg-gray-50 dark:hover:bg-slate-700 cursor-pointer">
+            <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Location</p>
+            <p id="selectedLocation" class="text-gray-400 dark:text-gray-300 mt-2">Find a location</p>
           </div>
 
-          <div class="p-4 hover:bg-gray-50 cursor-pointer border-t border-gray-200 sm:border-t-0">
-            <p class="text-xs font-semibold text-gray-500 uppercase">Guests</p>
-            <p class="text-gray-400">Add guests</p>
+          <!-- Guests -->
+          <div
+            id="tabGuests"
+            class="p-4 hover:bg-gray-50 dark:hover:bg-slate-700 cursor-pointer border-t border-gray-200 dark:border-gray-700 sm:border-t-0"
+          >
+            <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Guests</p>
+            <p id="selectedGuests" class="text-gray-400 dark:text-gray-300 mt-2">Add guests</p>
           </div>
 
+          <!-- Search button (desktop) -->
           <div class="hidden sm:flex items-center justify-center p-4">
-            <button class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-2xl shadow">🔍 Search</button>
+            <button class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-2xl shadow cursor-pointer">
+              🔍 Search
+            </button>
           </div>
         </div>
 
-        <div class="mt-4 space-y-4 p-6">
-          <div>
-            <p class="font-semibold text-gray-700">Adults</p>
-            <p class="text-sm text-gray-400">Ages 13 or above</p>
-            <div class="flex items-center gap-3 mt-2">
-              <button class="px-2 py-1 border rounded">-</button>
-              <span>0</span>
-              <button class="px-2 py-1 border rounded">+</button>
-            </div>
-          </div>
-          <div>
-            <p class="font-semibold text-gray-700">Children</p>
-            <p class="text-sm text-gray-400">Ages 2–12</p>
-            <div class="flex items-center gap-3 mt-2">
-              <button class="px-2 py-1 border rounded">-</button>
-              <span>0</span>
-              <button class="px-2 py-1 border rounded">+</button>
-            </div>
-          </div>
-        </div>
+        <div id="panelContent" class="mt-4 space-y-4 p-6"></div>
 
-        <div class="flex items-center justify-center p-4">
+        <!-- Search button (mobile) -->
+        <div class="sm:hidden flex items-center justify-center p-4 cursor-pointer">
           <button class="flex items-center gap-2 bg-red-500 hover:bg-red-600 transition text-white px-6 py-3 rounded-2xl">🔍 Search</button>
         </div>
       </div>
     </div>
+
     <header>
       <div class="flex flex-col sm:flex-row sm:justify-between gap-4 p-8 text-sm">
         <img class="w-24" src="./src/images/icons/logo-f7862584.svg" alt="logo-icon" />
-        <div id="searchFilter" class="flex items-center w-[300px] rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.15)] cursor-pointer mx-auto sm:mx-0">
+        <div
+          id="searchFilter"
+          class="flex items-center w-[300px] rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.15)] cursor-pointer mx-auto sm:mx-0 dark:bg-gray-600"
+        >
           <div class="flex-1 text-center py-3 border-r border-gray-200">
-            <span class="text-gray-400">Add location</span>
+            <span class="text-gray-400 dark:text-white">Add location</span>
           </div>
           <div class="flex-1 text-center py-3 border-r border-gray-200">
-            <span class="text-gray-400">Add guests</span>
+            <span class="text-gray-400 dark:text-white">Add guests</span>
           </div>
           <div class="flex items-center justify-center w-12">
             <img class="w-5" src="https://windbnb-dev-challenges.vercel.app/assets/search_icon.326a574d.svg" alt="search icon" />
           </div>
         </div>
       </div>
+      <label id="ui-switch" class="flex items-center justify-end mr-8 mb-4">
+        <input type="checkbox" />
+        <div class="slider">
+          <div class="circle"></div>
+        </div>
+      </label>
     </header>
     <main>
+      <div class="flex justify-between items-center px-8 lg:px-12 mb-6">
+        <h1 id="staysTitle" class="text-xl font-bold dark:text-white">Stays in Finland</h1>
+        <span id="staysCount" class="text-gray-500 dark:text-gray-200">+12 stays</span>
+      </div>
       <div id="containerCards" class="gap-8 p-8 lg:p-12 grid sm:grid-cols-2 lg:grid-cols-3 place-items-center"></div>
     </main>
-    <footer class="flex items-center justify-center cursor-pointer p-6">
-      <a href="" class="text-gray-400 text-sm">Created by 21Geral - devChallenges.io</a>
+    <footer class="flex items-center justify-self-center p-6">
+      <a href="https://github.com/21Geral/windbnb" target="_blank" class="text-gray-400 dark:text-gray-200 text-sm">
+        Created by
+        <span class="cursor-pointer">21Geral</span>
+        - devChallenges.io
+      </a>
     </footer>
   </body>
 </html>
