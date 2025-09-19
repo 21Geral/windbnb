@@ -1,3 +1,3 @@
-# ¡Bienvenidos al proyecto! 🎉
+# ¡Bienvenidos a este proyecto! 🎉
 
-En este proyecto he intendo recrear el desafio de Windbnb DevChallenges añadiendo dark Mode
+En este proyecto he realizado el desafio de Windbnb DevChallenges añadiendo dark Mode!
